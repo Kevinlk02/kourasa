@@ -6,7 +6,7 @@ import { handler, HttpError } from '../_shared/http.ts';
 import { admin, loadCity, rateLimit, requireUser } from '../_shared/supabase.ts';
 import { isRestaurantTypes, nearbyRestaurant, placeDetails } from '../_shared/google.ts';
 import { buildQuote } from '../_shared/pricing-context.ts';
-import { sendSms } from '../_shared/sms.ts';
+import { sendDeliveryCode } from '../_shared/sms.ts';
 import { createDeliveryRequestSchema, type PlaceInput } from '../_shared/core/schemas.ts';
 
 const SITE_URL = Deno.env.get('SITE_URL') ?? 'http://localhost:3000';
@@ -130,15 +130,16 @@ Deno.serve(handler(createDeliveryRequestSchema, async (input, req) => {
   if (searchErr) throw searchErr;
 
   const link = `${SITE_URL}/t/${delivery.tracking_token}`;
-  const sent = await sendSms(input.recipient_phone,
-    `Koursa : un colis arrive pour vous. Code de réception : ${code} (à donner au coursier). Suivi : ${link}`, delivery.id);
-  if (sent) await admin.from('delivery_private').update({ code_sms_sent_at: new Date().toISOString() }).eq('delivery_id', delivery.id);
+  // Code + lien au destinataire : WhatsApp d'abord, SMS en secours.
+  const msg = await sendDeliveryCode(input.recipient_phone, code, link, delivery.id);
+  if (msg.sent) await admin.from('delivery_private').update({ code_sms_sent_at: new Date().toISOString() }).eq('delivery_id', delivery.id);
 
   return {
     delivery_id: delivery.id,
     tracking_token: delivery.tracking_token,
     price: q.price,
     currency: city.currency,
-    sms_sent: sent,
+    sms_sent: msg.sent,
+    code_channel: msg.channel,
   };
 }));

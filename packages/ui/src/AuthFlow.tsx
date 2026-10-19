@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
 import { t, toE164 } from '@koursa/shared';
-
-const E164 = /^\+\d{8,15}$/;
 import { Button } from './Button';
 import { Input } from './Input';
 import { PhoneInput } from './PhoneInput';
@@ -11,9 +9,15 @@ import { Screen } from './Bits';
 import { getSupabase, rpcMessage } from './supabase';
 import { useSession } from './session';
 
-type Step = 'phone' | 'code' | 'name';
+const E164 = /^\+\d{8,15}$/;
 
-/** Connexion par OTP SMS : numéro → code à 6 chiffres → nom (première fois). */
+type Step = 'phone' | 'code' | 'name';
+type Channel = 'whatsapp' | 'sms';
+
+/**
+ * Connexion par code à usage unique : numéro → code à 6 chiffres → nom (première fois).
+ * Le code part d'abord par WhatsApp (Twilio) ; si WhatsApp échoue, il part automatiquement par SMS.
+ */
 export function AuthFlow({ appName, tagline }: { appName: string; tagline: string }) {
   const sb = getSupabase();
   const { session, profile, country, refreshProfile } = useSession();
@@ -23,20 +27,33 @@ export function AuthFlow({ appName, tagline }: { appName: string; tagline: strin
   const [name, setName] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [channel, setChannel] = useState<Channel>('whatsapp');
   const dial = country?.dial_code ?? '+228';
   const phone = toE164(dial, local);
 
-  async function sendCode() {
+  async function sendCode(preferred: Channel = 'whatsapp') {
     setError(null);
     if (!E164.test(phone) || local.replace(/\D/g, '').length < 8) {
       setError('Numéro invalide');
       return;
     }
     setBusy(true);
-    const { error: e } = await sb.auth.signInWithOtp({ phone });
+    let used: Channel = preferred;
+    let { error: e } = await sb.auth.signInWithOtp({ phone, options: { channel: preferred } });
+    // WhatsApp indisponible (numéro sans WhatsApp, canal non configuré…) : secours SMS.
+    // On ne bascule pas si c'est une limite de fréquence (le SMS serait refusé aussi).
+    if (e && preferred === 'whatsapp' && !/rate|seconds|too many/i.test(e.message)) {
+      used = 'sms';
+      ({ error: e } = await sb.auth.signInWithOtp({ phone, options: { channel: 'sms' } }));
+    }
     setBusy(false);
-    if (e) setError(rpcMessage(e));
-    else setStep('code');
+    if (e) {
+      setError(rpcMessage(e));
+      return;
+    }
+    setChannel(used);
+    setCode('');
+    setStep('code');
   }
 
   async function verify() {
@@ -77,7 +94,11 @@ export function AuthFlow({ appName, tagline }: { appName: string; tagline: strin
             {step === 'code' && <Title>{t('auth.code.title')}</Title>}
             {step === 'name' && <Title>{t('auth.name.title')}</Title>}
             {step === 'phone' && <Body style={{ color: '#6B6B6B' }}>{tagline} {t('auth.phone.subtitle')}</Body>}
-            {step === 'code' && <Body style={{ color: '#6B6B6B' }}>{t('auth.code.subtitle', { phone })}</Body>}
+            {step === 'code' && (
+              <Body style={{ color: '#6B6B6B' }}>
+                {t(channel === 'whatsapp' ? 'auth.code.subtitleWhatsapp' : 'auth.code.subtitle', { phone })}
+              </Body>
+            )}
           </View>
 
           {step === 'phone' && (
@@ -94,10 +115,13 @@ export function AuthFlow({ appName, tagline }: { appName: string; tagline: strin
         </View>
 
         <View style={{ gap: 8 }}>
-          {step === 'phone' && <Button title={t('common.continue')} onPress={sendCode} loading={busy} />}
+          {step === 'phone' && <Button title={t('common.continue')} onPress={() => sendCode('whatsapp')} loading={busy} />}
           {step === 'code' && (
             <>
               <Button title={t('common.confirm')} onPress={verify} loading={busy} disabled={code.length !== 6} />
+              {channel === 'whatsapp' ? (
+                <Button title={t('auth.code.bySms')} variant="secondary" onPress={() => sendCode('sms')} disabled={busy} />
+              ) : null}
               <Button title={t('auth.code.resend')} variant="ghost" onPress={() => { setCode(''); setStep('phone'); }} />
             </>
           )}

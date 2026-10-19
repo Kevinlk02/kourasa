@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { ConfigContext, ExpoConfig } from 'expo/config';
 
-const projectId = process.env.EAS_PROJECT_ID_COURIER;
+const projectId = process.env.EAS_PROJECT_ID_COURIER ?? '83b77a8c-b2fc-4701-82c1-24be5bb9b2b4';
 const googleServices = process.env.GOOGLE_SERVICES_JSON
   ? path.resolve(__dirname, process.env.GOOGLE_SERVICES_JSON)
   : undefined;
