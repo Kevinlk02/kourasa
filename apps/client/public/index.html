@@ -3,27 +3,42 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
+    <meta name="description" content="Koursa : envoyez un colis à Lomé avec un coursier à moto. Prix affiché avant de commander, suivi en direct." />
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="Koursa" />
+    <meta name="robots" content="noindex" />
     <link rel="manifest" href="/app/manifest.webmanifest" />
     <link rel="apple-touch-icon" href="/app/icons/icon-192.png" />
     <title>Koursa</title>
     <style id="expo-reset">
       html, body { height: 100%; }
-      body { overflow: hidden; margin: 0; background: #fff; }
+      body { overflow: hidden; margin: 0; background: #fff; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
       #root { display: flex; height: 100%; flex: 1; }
+      /* Écran de chargement affiché immédiatement, avant le JavaScript (3G) ; remplacé par l'app. */
+      .boot { margin: auto; display: flex; flex-direction: column; align-items: center; gap: 14px; color: #6b6b6b; font-size: 15px; }
+      .boot-logo { width: 56px; height: 56px; border-radius: 14px; background: #00875a; color: #fff; font: 800 30px/56px system-ui, sans-serif; text-align: center; }
+      .boot-bar { width: 120px; height: 4px; border-radius: 2px; background: #eee; overflow: hidden; }
+      .boot-bar::after { content: ''; display: block; width: 40%; height: 100%; background: #00875a; animation: boot 1.1s ease-in-out infinite; }
+      @keyframes boot { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+      @media (prefers-reduced-motion: reduce) { .boot-bar::after { animation: none; width: 100%; } }
     </style>
   </head>
   <body>
     <noscript>Activez JavaScript pour utiliser Koursa.</noscript>
-    <div id="root"></div>
+    <main id="root" aria-label="Koursa">
+      <div class="boot" role="status">
+        <div class="boot-logo" aria-hidden="true">K</div>
+        <div>Chargement de Koursa…</div>
+        <div class="boot-bar" aria-hidden="true"></div>
+      </div>
+    </main>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/app/sw.js', { scope: '/app/' });
+          navigator.serviceWorker.register('/app/sw.js', { scope: '/app' });
         });
       }
     </script>

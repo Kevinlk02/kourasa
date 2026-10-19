@@ -29,7 +29,7 @@ export default function Home() {
         markers={pos ? [{ id: 'me', kind: 'me', ...pos }] : []} />
       <BottomSheet>
         <Title>{t('home.where')}</Title>
-        <Pressable onPress={() => router.push('/new')} accessibilityRole="button"
+        <Pressable onPress={() => router.push('/new')} role="button"
           style={{ height: 56, borderRadius: radius.button, backgroundColor: colors.surface, justifyContent: 'center', paddingHorizontal: 16 }}>
           <Text style={{ fontSize: 17, color: colors.muted }}>🔍  {t('create.dropoff')}</Text>
         </Pressable>

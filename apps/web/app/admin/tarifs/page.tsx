@@ -2,7 +2,8 @@
 
 // Tarification par ville : tous les champs de cities.pricing + aperçu du prix pour 3, 6 et 10 km.
 import { useEffect, useMemo, useState } from 'react';
-import { computePrice, formatMoney, pricingParamsSchema, type PricingParams } from '@koursa/shared';
+import { computePrice, formatMoney, type PricingParams } from '@koursa/shared';
+import { pricingParamsSchema } from '@koursa/shared/schemas';
 import { currencyOf, useAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 

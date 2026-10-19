@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Page } from '@/components/Site';
 
-export const metadata: Metadata = { title: 'Politique de confidentialité' };
+export const metadata: Metadata = { title: 'Politique de confidentialité', description: 'Quelles données Koursa collecte (téléphone, adresses, positions GPS des coursiers), pourquoi et combien de temps.', alternates: { canonical: '/confidentialite' } };
 
 export default function Confidentialite() {
   return (

@@ -45,7 +45,7 @@ export function multiPolygonToRings(geo: { type: string; coordinates: number[][]
 
 export const MARKER_COLORS = {
   pickup: '#111111',
-  dropoff: '#00A86B',
+  dropoff: '#00875A',
   courier: '#2F80ED',
   me: '#2F80ED',
   point: '#6B6B6B',

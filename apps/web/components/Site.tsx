@@ -8,8 +8,8 @@ export function SiteHeader() {
         <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-accent text-white">K</span>
         Koursa
       </Link>
-      <nav className="flex items-center gap-5 text-[15px] font-medium">
-        <Link href="/coursiers" className="hidden sm:inline">Devenir coursier</Link>
+      <nav aria-label="Navigation principale" className="flex items-center gap-4 text-[15px] font-medium sm:gap-5">
+        <Link href="/coursiers" className="text-sm sm:text-[15px]"><span className="sm:hidden">Coursiers</span><span className="hidden sm:inline">Devenir coursier</span></Link>
         <Link href="/telecharger" className="btn-sm bg-ink text-white">Télécharger</Link>
       </nav>
     </header>

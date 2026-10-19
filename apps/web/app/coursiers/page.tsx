@@ -2,7 +2,11 @@ import type { Metadata } from 'next';
 import { Page } from '@/components/Site';
 import { latestVersions } from '@/lib/supabase';
 
-export const metadata: Metadata = { title: 'Devenir coursier' };
+export const metadata: Metadata = {
+  title: 'Devenir coursier',
+  description: 'Devenez coursier Koursa à Lomé : recevez les courses de votre zone, gardez 82 % du prix et des frais d’attente. Conditions et documents à préparer.',
+  alternates: { canonical: '/coursiers' },
+};
 export const revalidate = 300;
 
 export default async function Coursiers() {

@@ -2,7 +2,7 @@ import { Text as RNText, type TextProps, StyleSheet } from 'react-native';
 import { colors, font } from '@koursa/shared';
 
 export function Title(props: TextProps) {
-  return <RNText accessibilityRole="header" {...props} style={[styles.title, props.style]} />;
+  return <RNText role="heading" {...props} style={[styles.title, props.style]} />;
 }
 export function Subtitle(props: TextProps) {
   return <RNText {...props} style={[styles.subtitle, props.style]} />;

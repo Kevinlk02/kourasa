@@ -25,7 +25,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-3">
             <Link href="/telecharger" className="btn-primary">Télécharger l’application</Link>
-            <Link href="/app" className="btn-secondary">Utiliser dans le navigateur</Link>
+            <a href="/app" className="btn-secondary">Utiliser dans le navigateur</a>
           </div>
           <p className="text-sm text-muted">Android : application à installer depuis notre site · iPhone : ajoutez Koursa à l’écran d’accueil.</p>
         </div>
@@ -41,7 +41,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="grid gap-4 py-8 sm:grid-cols-3">
+      <section className="py-8" aria-labelledby="how">
+        <h2 id="how" className="mb-4 text-2xl font-bold">Comment ça marche</h2>
+        <div className="grid gap-4 sm:grid-cols-3">
         {[
           ['1. Indiquez les deux adresses', 'Position, lieux récents, recherche ou épingle sur la carte — et un repère pour trouver la porte.'],
           ['2. Un coursier de votre zone accepte', 'Les coursiers les plus proches reçoivent la course en premier.'],
@@ -52,6 +54,7 @@ export default function Home() {
             <p className="mt-2 text-muted">{body}</p>
           </div>
         ))}
+        </div>
       </section>
 
       <section className="py-8">

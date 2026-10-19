@@ -158,7 +158,7 @@ export default function Track() {
               <Body style={{ fontWeight: '600' }}>{courier.name}{courier.rating_avg ? ` · ★ ${courier.rating_avg}` : ''}</Body>
               <Caption>{courier.vehicle_model} · {courier.plate}</Caption>
             </View>
-            <Pressable onPress={() => Linking.openURL(`tel:${courier.phone}`)} accessibilityRole="button"
+            <Pressable onPress={() => Linking.openURL(`tel:${courier.phone}`)} role="button"
               style={{ backgroundColor: colors.surface, borderRadius: 24, paddingHorizontal: 16, paddingVertical: 10 }}>
               <Text style={{ fontWeight: '600' }}>📞 {t('common.call')}</Text>
             </Pressable>

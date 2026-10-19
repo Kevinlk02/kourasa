@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { AdminProvider, useAdmin } from '@/lib/admin';
 import { supabase } from '@/lib/supabase';
 
@@ -36,8 +36,8 @@ function Login() {
         setBusy(false);
         if (err) setError('Identifiants incorrects');
       }}>
-        <input className="input" type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
-        <input className="input" type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
+        <input className="input" type="email" aria-label="E-mail" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="username" />
+        <input className="input" type="password" aria-label="Mot de passe" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />
         {error ? <p className="text-sm text-danger">{error}</p> : null}
         <button className="btn-primary w-full" disabled={busy}>Se connecter</button>
       </form>
@@ -48,6 +48,10 @@ function Login() {
 function Shell({ children }: { children: ReactNode }) {
   const { session, isAdmin, cities, city, setCityId } = useAdmin();
   const path = usePathname();
+  useEffect(() => {
+    const label = NAV.find(([href]) => href === path)?.[1] ?? 'Administration';
+    document.title = `${label} · Admin Koursa`;
+  }, [path]);
   if (session === undefined) return <p className="p-8 text-muted">Chargement…</p>;
   if (session === null) return <Login />;
   if (isAdmin === null) return <p className="p-8 text-muted">Chargement…</p>;
@@ -65,7 +69,7 @@ function Shell({ children }: { children: ReactNode }) {
         <Link href="/admin" className="mb-3 flex items-center gap-2 px-2 text-lg font-extrabold">
           <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-accent text-sm text-white">K</span> Admin
         </Link>
-        <select className="input mb-3 h-9" value={city?.id ?? ''} onChange={(e) => setCityId(e.target.value)}>
+        <select aria-label="Ville" className="input mb-3 h-9" value={city?.id ?? ''} onChange={(e) => setCityId(e.target.value)}>
           {cities.map((c) => <option key={c.id} value={c.id}>{c.name}{c.active ? '' : ' (inactive)'}</option>)}
         </select>
         {NAV.map(([href, label]) => (

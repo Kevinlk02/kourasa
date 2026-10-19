@@ -47,7 +47,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       isAndroidForegroundServiceEnabled: true,
     }],
     ['expo-image-picker', { cameraPermission: 'Koursa utilise l\'appareil photo pour vos documents et les photos de colis.' }],
-    ['expo-notifications', { color: '#00A86B' }],
+    ['expo-notifications', { color: '#00875A' }],
   ],
   runtimeVersion: { policy: 'appVersion' },
   updates: projectId ? { url: `https://u.expo.dev/${projectId}`, fallbackToCacheTimeout: 0 } : undefined,

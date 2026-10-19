@@ -45,7 +45,7 @@ Si un choix produit n'est pas tranché dans ces documents (voir « Points ouvert
 
 ## Design system (Uber-like, identité propre)
 - Fond blanc, texte quasi noir `#111`, gris `#6B6B6B`, séparateurs `#EEE`
-- Couleur d'accent : à définir (placeholder `#00A86B`), utilisée avec parcimonie (CTA principal, statut actif)
+- Couleur d'accent : à définir (placeholder `#00875A`, assombri depuis #00A86B pour un contraste AA 4,5:1 avec le texte blanc), utilisée avec parcimonie (CTA principal, statut actif)
 - Couleurs de zone (carte admin et app coursier) : Zone 1 et Zone 2 doivent être distinguables, définies dans `zones.color`
 - Typo : Inter (ou système). Titres 24–28 gras, corps 16, légendes 13
 - Écran principal = carte plein écran + bottom sheet arrondi (radius 16) avec la prochaine action

@@ -6,7 +6,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-native';
 import * as Location from 'expo-location';
-import { colors, t, type PlaceInput, type SavedPlace } from '@koursa/shared';
+import { colors, t, type SavedPlace } from '@koursa/shared';
+import type { PlaceInput } from '@koursa/shared/schemas';
 import {
   BottomSheet, Body, Button, Caption, Divider, Input, KoursaMap, ListItem, MapPin, Subtitle,
   callFunction, getSupabase,

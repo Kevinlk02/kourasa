@@ -1,4 +1,4 @@
-import 'react-native-url-polyfill/auto';
+import '../src/polyfills';
 // Déclare la tâche de localisation en arrière-plan dès le chargement du bundle.
 import '../src/tracking';
 import { useEffect } from 'react';

@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { router } from 'expo-router';
 import {
-  colors, createDeliveryRequestSchema, formatMoney, t, toE164,
+  colors, formatMoney, t, toE164,
   type PackageSize, type Payer, type QuoteResponse,
 } from '@koursa/shared';
+import { createDeliveryRequestSchema } from '@koursa/shared/schemas';
 import {
   BottomSheet, Body, Button, Caption, Choice, Divider, Input, KoursaMap, PhoneInput, Row, Subtitle, Title,
   callFunction, useSession,

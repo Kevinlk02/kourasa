@@ -19,7 +19,7 @@ export function Button({ title, onPress, variant = 'primary', loading, disabled,
   return (
     <Pressable
       testID={testID}
-      accessibilityRole="button"
+      role="button"
       accessibilityState={{ disabled: !!off, busy: !!loading }}
       onPress={off ? undefined : onPress}
       style={({ pressed }) => [

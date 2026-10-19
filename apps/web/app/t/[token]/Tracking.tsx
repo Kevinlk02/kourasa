@@ -59,7 +59,7 @@ export function Tracking({ token }: { token: string }) {
   useEffect(() => {
     if (!map || !data) return;
     markers.current.forEach((m) => m.setMap(null));
-    markers.current = [new google.maps.Marker({ map, position: { lat: data.dropoff_lat, lng: data.dropoff_lng }, icon: dot('#00A86B', 9), title: 'Livraison' })];
+    markers.current = [new google.maps.Marker({ map, position: { lat: data.dropoff_lat, lng: data.dropoff_lng }, icon: dot('#00875A', 9), title: 'Livraison' })];
     const b = new google.maps.LatLngBounds({ lat: data.dropoff_lat, lng: data.dropoff_lng });
     if (data.courier?.lat && data.courier.lng) {
       markers.current.push(new google.maps.Marker({ map, position: { lat: data.courier.lat, lng: data.courier.lng }, icon: dot('#2F80ED', 9), title: 'Coursier' }));
@@ -70,8 +70,8 @@ export function Tracking({ token }: { token: string }) {
     }
   }, [map, data]);
 
-  if (data === undefined) return <div className="p-8 text-center text-muted">{t('common.loading')}</div>;
-  if (data === null) return <div className="p-8 text-center">Lien de suivi invalide ou expiré.</div>;
+  if (data === undefined) return <main className="p-8 text-center text-muted">{t('common.loading')}</main>;
+  if (data === null) return <main className="p-8 text-center"><h1 className="text-xl font-bold">Lien de suivi invalide ou expiré.</h1><p className="mt-2 text-muted">Vérifiez le lien reçu par SMS.</p></main>;
 
   const active = ['assigned', 'picked_up', 'delivering'].includes(data.status);
   return (

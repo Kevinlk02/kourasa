@@ -117,7 +117,7 @@ export function ListItem({ title, subtitle, right, onPress }: { title: string; s
 
 export function Choice({ label, hint, selected, onPress }: { label: string; hint?: string; selected: boolean; onPress: () => void }) {
   return (
-    <Pressable onPress={onPress} accessibilityRole="radio" accessibilityState={{ selected }}
+    <Pressable onPress={onPress} role="radio" accessibilityState={{ selected }}
       style={[styles.choice, selected && { borderColor: colors.text, backgroundColor: colors.background }]}>
       <Text style={{ fontSize: font.body, fontWeight: '600', color: colors.text }}>{label}</Text>
       {hint ? <Text style={{ fontSize: font.caption, color: colors.muted }}>{hint}</Text> : null}

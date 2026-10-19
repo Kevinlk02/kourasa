@@ -6,12 +6,13 @@
   --color-muted: #6b6b6b;
   --color-line: #eeeeee;
   --color-surface: #f6f6f6;
-  --color-accent: #00a86b;
+  --color-accent: #00875a;
   --color-danger: #d93025;
   --color-warning: #e8a317;
   --color-zone1: #2f80ed;
   --color-zone2: #f2994a;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Police système : aucun téléchargement (3G, téléphones d'entrée de gamme). Inter si déjà installée. */
+  --font-sans: 'Inter', system-ui, ui-sans-serif, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 html,

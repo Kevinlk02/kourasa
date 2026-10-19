@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, View } from 'react-native';
-import { t, toE164, phoneSchema } from '@koursa/shared';
+import { t, toE164 } from '@koursa/shared';
+
+const E164 = /^\+\d{8,15}$/;
 import { Button } from './Button';
 import { Input } from './Input';
 import { PhoneInput } from './PhoneInput';
@@ -26,7 +28,7 @@ export function AuthFlow({ appName, tagline }: { appName: string; tagline: strin
 
   async function sendCode() {
     setError(null);
-    if (!phoneSchema.safeParse(phone).success || local.replace(/\D/g, '').length < 8) {
+    if (!E164.test(phone) || local.replace(/\D/g, '').length < 8) {
       setError('Numéro invalide');
       return;
     }

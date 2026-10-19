@@ -7,7 +7,8 @@
   "types": "src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./i18n/fr.json": "./src/i18n/fr.json"
+    "./i18n/fr.json": "./src/i18n/fr.json",
+    "./schemas": "./src/schemas.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

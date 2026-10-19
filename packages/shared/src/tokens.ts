@@ -6,7 +6,7 @@ export const colors = {
   border: '#EEEEEE',
   surface: '#F6F6F6',
   /** Accent provisoire : CTA principal et statut actif uniquement. */
-  accent: '#00A86B',
+  accent: '#00875A',
   accentText: '#FFFFFF',
   danger: '#D93025',
   warning: '#E8A317',

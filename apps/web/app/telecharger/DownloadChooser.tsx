@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import QRCode from 'qrcode';
 
-type Device = 'android' | 'iphone' | 'desktop' | null;
+type Device = 'android' | 'iphone' | 'desktop';
 
 function detect(): Device {
   const ua = navigator.userAgent;
@@ -18,16 +17,17 @@ function size(b: number | null): string {
 }
 
 export function DownloadChooser(props: {
-  apkPath: string; version: string | null; publishedAt: string | null; sizeBytes: number | null; sha256: string | null; siteUrl: string;
+  initialDevice: Device; apkPath: string; version: string | null; publishedAt: string | null; sizeBytes: number | null; sha256: string | null; siteUrl: string;
 }) {
-  const [device, setDevice] = useState<Device>(null);
+  const [device, setDevice] = useState<Device>(props.initialDevice);
   const [qr, setQr] = useState<string | null>(null);
 
   useEffect(() => {
     const d = detect();
     setDevice(d);
     if (d === 'desktop') {
-      QRCode.toDataURL(`${props.siteUrl}/telecharger`, { margin: 1, width: 220 }).then(setQr);
+      // Chargé seulement sur ordinateur : rien de plus à télécharger pour les téléphones.
+      import('qrcode').then((QRCode) => QRCode.toDataURL(`${props.siteUrl}/telecharger`, { margin: 1, width: 220 })).then(setQr);
     }
   }, [props.siteUrl]);
 
@@ -54,7 +54,7 @@ export function DownloadChooser(props: {
           <a href="/app" className="btn-secondary w-full">Ou utiliser sans installer</a>
           {meta}
         </>
-      ) : device === 'desktop' ? (
+      ) : (
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
           {qr ? <img src={qr} alt="QR code vers la page de téléchargement" width={220} height={220} className="rounded-xl" /> : <div className="h-[220px] w-[220px] rounded-xl bg-surface" />}
           <div className="space-y-3">
@@ -64,8 +64,6 @@ export function DownloadChooser(props: {
             {meta}
           </div>
         </div>
-      ) : (
-        <div className="h-14 animate-pulse rounded-xl bg-surface" />
       )}
     </div>
   );

@@ -23,7 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     // Ne JAMAIS changer après la première diffusion.
     package: 'tg.koursa.client',
     versionCode: 1,
-    adaptiveIcon: { foregroundImage: './assets/adaptive-icon.png', backgroundColor: '#00A86B' },
+    adaptiveIcon: { foregroundImage: './assets/adaptive-icon.png', backgroundColor: '#00875A' },
     permissions: ['ACCESS_FINE_LOCATION', 'ACCESS_COARSE_LOCATION', 'POST_NOTIFICATIONS'],
     blockedPermissions: ['android.permission.RECORD_AUDIO'],
     config: { googleMaps: { apiKey: process.env.GOOGLE_MAPS_ANDROID_KEY ?? '' } },
@@ -42,9 +42,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   // La PWA est servie sous /app par apps/web (pnpm export:pwa).
   experiments: { baseUrl: process.env.EXPO_BASE_URL ?? '', typedRoutes: false },
   plugins: [
-    'expo-router',
+    // Web : un fichier JS par écran (chargé à la demande) et pas de page « sitemap » de développement.
+    ['expo-router', { asyncRoutes: { web: 'production', default: false }, sitemap: false }],
     ['expo-location', { locationWhenInUsePermission: 'Koursa utilise votre position pour le point de récupération.' }],
-    ['expo-notifications', { color: '#00A86B' }],
+    ['expo-notifications', { color: '#00875A' }],
   ],
   runtimeVersion: { policy: 'appVersion' },
   updates: projectId ? { url: `https://u.expo.dev/${projectId}`, fallbackToCacheTimeout: 0 } : undefined,

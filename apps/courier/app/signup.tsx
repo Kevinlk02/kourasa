@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 import { router } from 'expo-router';
-import { colors, courierSignupSchema, t } from '@koursa/shared';
+import { colors, t } from '@koursa/shared';
+import { courierSignupSchema } from '@koursa/shared/schemas';
 import { Body, Button, Caption, Input, Title, getSupabase, rpcMessage, useSession } from '@koursa/ui';
 import { takePhoto, uploadPhoto } from '../src/upload';
 

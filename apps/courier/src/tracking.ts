@@ -6,7 +6,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import * as TaskManager from 'expo-task-manager';
-import type { LocationPing } from '@koursa/shared';
+import type { LocationPing } from '@koursa/shared/schemas';
 import { getSupabase } from '@koursa/ui';
 
 export const LOCATION_TASK = 'koursa-courier-location';
@@ -86,7 +86,7 @@ export async function startTracking(): Promise<void> {
     foregroundService: {
       notificationTitle: 'Koursa : vous êtes en ligne',
       notificationBody: 'Votre position est partagée pour recevoir des courses.',
-      notificationColor: '#00A86B',
+      notificationColor: '#00875A',
       killServiceOnDestroy: false,
     },
   });

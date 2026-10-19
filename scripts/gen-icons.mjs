@@ -38,7 +38,7 @@ function png(size, pixel) {
   return Buffer.concat([Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]), chunk('IHDR', ihdr), chunk('IDAT', zlib.deflateSync(raw)), chunk('IEND', Buffer.alloc(0))]);
 }
 
-const GREEN = [0, 168, 107, 255];
+const GREEN = [0, 135, 90, 255];
 const WHITE = [255, 255, 255, 255];
 const CLEAR = [0, 0, 0, 0];
 

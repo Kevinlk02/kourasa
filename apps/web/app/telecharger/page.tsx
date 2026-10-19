@@ -1,12 +1,23 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { Page } from '@/components/Site';
 import { latestVersions } from '@/lib/supabase';
 import { DownloadChooser } from './DownloadChooser';
 
-export const metadata: Metadata = { title: 'Télécharger' };
-export const revalidate = 300;
+export const metadata: Metadata = {
+  title: 'Télécharger',
+  description: 'Installez Koursa : application Android à télécharger depuis notre site, ou application web sur iPhone (ajout à l’écran d’accueil).',
+  alternates: { canonical: '/telecharger' },
+};
+// Détection du téléphone côté serveur : le bon bouton s'affiche dès le premier rendu (pas de saut de mise en page).
+function deviceFromUa(ua: string): 'android' | 'iphone' | 'desktop' {
+  if (/android/i.test(ua)) return 'android';
+  if (/iphone|ipad|ipod/i.test(ua)) return 'iphone';
+  return 'desktop';
+}
 
 export default async function Telecharger() {
+  const device = deviceFromUa((await headers()).get('user-agent') ?? '');
   const versions = await latestVersions();
   const client = versions.find((v) => v.app === 'client' && v.platform === 'android') ?? null;
   return (
@@ -14,6 +25,7 @@ export default async function Telecharger() {
       <section className="mx-auto max-w-2xl space-y-6 py-10">
         <h1 className="text-3xl font-extrabold">Télécharger Koursa</h1>
         <DownloadChooser
+          initialDevice={device}
           apkPath="/telecharger/koursa.apk"
           version={client?.latest_version ?? null}
           publishedAt={client?.published_at ?? null}

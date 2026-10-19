@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Page } from '@/components/Site';
 
-export const metadata: Metadata = { title: 'Mentions légales' };
+export const metadata: Metadata = { title: 'Mentions légales', description: 'Mentions légales du service de livraison Koursa.', alternates: { canonical: '/mentions-legales' } };
 
 // À COMPLÉTER avant l'ouverture : informations de la société enregistrée au Togo (et au Tchad).
 export default function MentionsLegales() {
