@@ -1,0 +1,45 @@
+{
+  "name": "koursa",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:client": "pnpm --filter @koursa/client start",
+    "dev:courier": "pnpm --filter @koursa/courier start",
+    "dev:web": "pnpm --filter @koursa/web dev",
+    "build:web": "pnpm export:pwa && pnpm --filter @koursa/web build",
+    "export:pwa": "pnpm --filter @koursa/client export:web && node scripts/copy-pwa.mjs",
+    "sync:functions": "node scripts/sync-shared.mjs",
+    "release:android": "node scripts/release-android.mjs",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "check:sql": "node scripts/check-sql.mjs",
+    "env:sync": "node scripts/sync-env.mjs",
+    "icons": "node scripts/gen-icons.mjs",
+    "test:functions": "deno test --allow-env --allow-net --config supabase/functions/deno.json supabase/functions/tests/"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "eslint": "^9.17.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.18.2",
+    "@electric-sql/pglite": "^0.5.10",
+    "@electric-sql/pglite-postgis": "^0.2.10",
+    "eslint-plugin-react-hooks": "^5.2.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "@tailwindcss/oxide",
+      "unrs-resolver"
+    ]
+  }
+}

@@ -1,0 +1,39 @@
+node_modules/
+.turbo/
+dist/
+build/
+.next/
+out/
+.expo/
+web-build/
+*.tsbuildinfo
+coverage/
+
+# Secrets
+.env
+.env.*
+!.env.example
+google-services.json
+*.keystore
+*.jks
+credentials.json
+
+# Native (prebuild généré par EAS)
+apps/*/android/
+apps/*/ios/
+
+# PWA copiée au build
+apps/web/public/app/
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/
+
+# Graphify cache
+graphify-out/cache/
+
+.DS_Store
+Thumbs.db
+*.log
+graphify-out/.graphify_python
+graphify-out/.graphify_root

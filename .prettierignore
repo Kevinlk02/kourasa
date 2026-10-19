@@ -1,0 +1,8 @@
+node_modules
+.next
+dist
+.expo
+pnpm-lock.yaml
+graphify-out
+supabase/functions/_shared/core
+packages/shared/src/database.types.ts
